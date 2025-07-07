@@ -3,8 +3,8 @@
         <div
             class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between"
         >
-            <a
-                href="index.html"
+            <NuxtLink
+                :to="{ name: 'index' }"
                 class="logo d-flex align-items-center me-auto me-xl-0"
             >
                 <!-- Uncomment the line below if you also wish to use an image logo -->
@@ -13,7 +13,7 @@
                     alt="Desa Dangdang"
                 />
                 <h1 class="sitename">Desa Dangdang</h1>
-            </a>
+            </NuxtLink>
 
             <nav id="navmenu" class="navmenu">
                 <ul>
@@ -35,6 +35,11 @@
                         >
                     </li>
                     <li>
+                        <NuxtLink :to="{ name: 'index', hash: '#berita' }"
+                            >Berita</NuxtLink
+                        >
+                    </li>
+                    <li>
                         <NuxtLink :to="{ name: 'index', hash: '#testimonial' }"
                             >Testimonial</NuxtLink
                         >
@@ -47,8 +52,6 @@
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-
-            <a class="btn-getstarted" href="#about">Get Started</a>
         </div>
     </header>
 </template>

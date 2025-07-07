@@ -19,7 +19,7 @@
                         data-aos-delay="200"
                     >
                         <h3>Contact Info</h3>
-                        <p>{{ contact.company_name ?? "" }}</p>
+                        <p>Desa Dangdang</p>
 
                         <div
                             class="info-item"
@@ -31,8 +31,12 @@
                             </div>
                             <div class="content">
                                 <h4>Our Location</h4>
-                                <p>{{ contact.location_name }}</p>
-                                <p>{{ contact.address }}</p>
+                                <p>Kec. Cisauk, Kab. Tangerang, Banten</p>
+                                <p>
+                                    Jln. Raya Maloko No.1, RT.004 RW.002 Desa
+                                    Dangdang Kecamatan Cisauk Kabupaten
+                                    Tangerang-Provinsi Banten 15342
+                                </p>
                             </div>
                         </div>
 
@@ -46,7 +50,21 @@
                             </div>
                             <div class="content">
                                 <h4>Phone Number</h4>
-                                <p>{{ contact.phone_number }}</p>
+                                <p>081234567890</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="info-item"
+                            data-aos="fade-up"
+                            data-aos-delay="500"
+                        >
+                            <div class="icon-box">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div class="content">
+                                <h4>Email Address</h4>
+                                <p>dangdang@desa.id</p>
                             </div>
                         </div>
                     </div>
@@ -158,7 +176,7 @@
             };
         },
         mounted() {
-            this.fetchDataContactUs();
+            // this.fetchDataContactUs();
         },
         methods: {
             async fetchDataContactUs() {

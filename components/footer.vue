@@ -1,18 +1,30 @@
 <template>
     <footer id="footer" class="footer">
         <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-4 col-md-6 footer-about">
+            <div class="row gy-4 d-flex justify-center">
+                <div class="col-lg-6 col-md-6 footer-about">
                     <a href="#" class="logo d-flex align-items-center">
-                        <span class="sitename">BWACOMPRO</span>
+                        <span class="sitename">DESA DANGDANG</span>
                     </a>
                     <div class="footer-contact pt-3">
-                        <p>{{ contact.location_name }}</p>
-                        <p>{{ contact.address }}</p>
+                        <p>Kec. Cisauk, Kab. Tangerang, Banten</p>
+                        <p>
+                            Jln. Raya Maloko No.1, RT.004 RW.002 Desa Dangdang
+                            Kecamatan Cisauk Kabupaten Tangerang-Provinsi Banten
+                            15342
+                        </p>
                         <p class="mt-3">
                             <strong>Phone:</strong>
-                            <span>{{ contact.phone_number }}</span>
+                            <span>081234567890</span>
                         </p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href="https://facebook.com/desa.dangdang"
+                            ><i class="bi bi-facebook"></i
+                        ></a>
+                        <a href="https://www.instagram.com/desadangdang/"
+                            ><i class="bi bi-instagram"></i
+                        ></a>
                     </div>
                 </div>
 
@@ -34,6 +46,11 @@
                         <li>
                             <NuxtLink :to="{ name: 'index', hash: '#team' }"
                                 >Team</NuxtLink
+                            >
+                        </li>
+                        <li>
+                            <NuxtLink :to="{ name: 'index', hash: '#berita' }"
+                                >Berita</NuxtLink
                             >
                         </li>
                         <li>
