@@ -49,9 +49,9 @@
     </div>
 
     <div class="flex flex-row items-center justify-between">
-        <div class="my-5 text-2xl font-bold">List Data Slider</div>
+        <div class="my-5 text-2xl font-bold">List Data Post</div>
         <NuxtLink
-            to="/dashboard/hero/create"
+            to="/dashboard/post/create"
             class="mr-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
             >Tambah Data</NuxtLink
         >
@@ -66,9 +66,10 @@
                 class="text-xs border-b text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
             >
                 <tr>
-                    <th scope="col" class="px-6 py-3">Heading</th>
-                    <th scope="col" class="px-6 py-3">Sub Heading</th>
-                    <th scope="col" class="px-6 py-3">Banner</th>
+                    <th scope="col" class="px-6 py-3">Judul</th>
+                    <th scope="col" class="px-6 py-3">Penulis</th>
+                    <th scope="col" class="px-6 py-3">Image</th>
+                    <th scope="col" class="px-6 py-3">Dipublikasikan Pada</th>
                     <th scope="col" class="px-6 py-3">Action</th>
                 </tr>
             </thead>
@@ -82,17 +83,38 @@
                         scope="row"
                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                        {{ item.heading }}
+                        {{
+                            item.title.length > 60
+                                ? item.title.slice(0, 60) + "..."
+                                : item.title
+                        }}
                     </th>
                     <td class="px-6 py-4">
-                        {{ item.subheading }}
+                        {{ item.author }}
                     </td>
                     <td class="px-6 py-4">
-                        <img :src="item.banner" class="w-10 h-10" alt="" />
+                        <img
+                            :src="item.featured_image"
+                            class="w-10 h-10"
+                            alt=""
+                        />
                     </td>
+                    <td class="px-6 py-4">
+                        {{
+                            new Date(item.published_at).toLocaleDateString(
+                                "id-ID",
+                                {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "2-digit",
+                                }
+                            )
+                        }}
+                    </td>
+
                     <td class="flex items-center px-6 py-4">
                         <NuxtLink
-                            :to="`/dashboard/hero/edit/${item.id}`"
+                            :to="`/dashboard/post/edit/${item.id}`"
                             class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                             >Edit</NuxtLink
                         >
@@ -161,10 +183,10 @@
                         <h3
                             class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
                         >
-                            Are you sure you want to delete this product?
+                            Are you sure you want to delete this post?
                         </h3>
                         <button
-                            @click="deleteHero"
+                            @click="deletePost"
                             type="button"
                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
                         >
@@ -192,7 +214,7 @@
 
     definePageMeta({
         layout: "admin",
-        title: "Admin Area | Hero Section",
+        title: "Admin Area | Post Section",
         middleware: [auth],
     });
 
@@ -240,12 +262,12 @@
         }
     };
 
-    const deleteHero = async () => {
+    const deletePost = async () => {
         // Proses penghapusan data berdasarkan itemToDelete
         const id = itemToDelete.value;
         if (id) {
             try {
-                await deleteData("/hero-sections/admin", id);
+                await deleteData("/posts/admin", id);
                 successMessage = "Data berhasil dihapus!";
                 sessionStorage.setItem("successMessage", successMessage);
 
@@ -270,7 +292,7 @@
 
         loading.value = true;
         try {
-            data.value = await fetchData("/hero-sections/admin");
+            data.value = await fetchData("/posts");
         } catch (error) {
             console.error("Gagal mengambil data:", error);
         } finally {

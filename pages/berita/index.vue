@@ -1,10 +1,17 @@
 <template>
-    <section class="section berita" id="berita">
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Berita</h2>
+    <div class="page-title light-background">
+        <div class="container">
+            <h1>Berita</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><NuxtLink :to="{ name: 'index' }">Home</NuxtLink></li>
+                    <li class="current">Berita</li>
+                </ol>
+            </nav>
         </div>
-        <!-- End Section Title -->
-
+    </div>
+    <!-- End Page Title -->
+    <section id="berita" class="berita section">
         <div class="container" data-aos="fade-up">
             <div class="row g-4">
                 <div
@@ -112,42 +119,26 @@
                         </div>
                     </div>
                 </div>
-
-                <div
-                    class="col-lg-12 d-flex justify-content-center"
-                    data-aos="fade-up"
-                    data-aos-delay="100"
-                >
-                    <NuxtLink
-                        :to="{ name: 'berita' }"
-                        class="btn btn-primary me-0 me-sm-2 mx-1"
-                        >Berita Lainnya</NuxtLink
-                    >
-                </div>
             </div>
         </div>
     </section>
 </template>
 
 <script>
-    import { fetchData } from "~/utils/api";
-
     export default {
-        name: "PostSection",
         data() {
             return {
-                posts: [], // Array to store Posts data
+                posts: [],
             };
         },
         mounted() {
-            this.fetchPosts(); // Fetch Posts data
+            this.fetchDataPosts();
         },
         methods: {
-            async fetchPosts() {
+            async fetchDataPosts() {
                 try {
                     const response = await fetchData("/posts");
-                    this.posts = response.data; // Assign Posts data to the Posts array
-                    this.posts = this.posts.slice(0, 3);
+                    this.posts = response.data;
                 } catch (error) {
                     console.log(error);
                 }
@@ -168,4 +159,4 @@
     };
 </script>
 
-<style scoped></style>
+<style></style>

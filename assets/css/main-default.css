@@ -667,6 +667,43 @@ h6 {
     color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
+.page-title-berita {
+    color: var(--background-color);
+    background-color: var(--background-color);
+    padding: 170px 0 80px 0;
+    text-align: center;
+    position: relative;
+}
+
+.page-title-berita h1 {
+    color: var(--background-color);
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.page-title-berita .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.page-title-berita .breadcrumbs ol li + li {
+    padding-left: 10px;
+}
+
+.page-title-berita .breadcrumbs ol li + li::before {
+    content: "/";
+    display: inline-block;
+    padding-right: 10px;
+    color: color-mix(in srgb, var(--background-color), transparent 30%);
+}
+
 /*--------------------------------------------------------------
 # Global Sections
 --------------------------------------------------------------*/
@@ -717,6 +754,23 @@ section,
 }
 
 .section-title p {
+    margin-bottom: 0;
+}
+
+.section-title-berita {
+    padding-bottom: 40px;
+    position: relative;
+}
+
+.section-title-berita h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.section-title-berita p {
     margin-bottom: 0;
 }
 
@@ -828,6 +882,37 @@ section,
 .our-team .btn-primary:hover {
     background-color: color-mix(in srgb, var(--accent-color), black 20%);
     border-color: color-mix(in srgb, var(--accent-color), black 20%);
+}
+
+.berita .btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--contrast-color);
+    padding: 0.75rem 1.75rem;
+    border-radius: 50px;
+    font-weight: normal;
+    transition: all 0.3s ease;
+}
+
+.berita .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--accent-color), black 20%);
+    border-color: color-mix(in srgb, var(--accent-color), black 20%);
+}
+
+.berita .btn-primary-loop {
+    background-color: transparent;
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    padding: 0.75rem 1.75rem;
+    border-radius: 50px;
+    font-weight: normal;
+    transition: all 0.3s ease;
+}
+
+.berita .btn-primary-loop:hover {
+    background-color: color-mix(in srgb, var(--accent-color), black 20%);
+    border-color: color-mix(in srgb, var(--accent-color), black 20%);
+    color: var(--contrast-color);
 }
 
 .hero .btn-link {
