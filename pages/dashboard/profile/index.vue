@@ -1,7 +1,7 @@
 <template>
     <div>
         <NuxtLink
-            to="/dashboard/post"
+            to="/dashboard"
             class="flex items-center text-gray-900 hover:text-blue-800"
         >
             <svg
@@ -21,11 +21,60 @@
             Back
         </NuxtLink>
         <div class="flex flex-row items-center justify-between">
-            <div class="my-5 text-2xl font-bold">Tambah Post</div>
+            <div class="my-5 text-2xl font-bold">Edit Profile</div>
         </div>
 
-        <form @submit.prevent="handlerSubmit" method="post">
-            <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div
+            v-if="successMessage"
+            id="toast-success"
+            class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+            role="alert"
+        >
+            <div
+                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200"
+            >
+                <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                >
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                    />
+                </svg>
+                <span class="sr-only">Check icon</span>
+            </div>
+            <div class="ms-3 text-sm font-normal">{{ successMessage }}</div>
+            <button
+                @click="closeToast"
+                type="button"
+                class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                data-dismiss-target="#toast-success"
+                aria-label="Close"
+            >
+                <span class="sr-only">Close</span>
+                <svg
+                    class="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                >
+                    <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                </svg>
+            </button>
+        </div>
+
+        <form @submit.prevent="handlerSubmit" method="profile">
+            <div class="grid gap-6 mb-6 md:grid-cols-1">
                 <!-- Title Input -->
                 <div>
                     <label
@@ -43,83 +92,29 @@
                     />
                 </div>
 
-                <!-- Author Input -->
-                <div>
-                    <label
-                        for="author"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >Author</label
-                    >
-                    <input
-                        type="text"
-                        v-model="author"
-                        id="author"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Enter author"
-                        required
-                    />
-                </div>
-
-                <!-- Published Date Input -->
-                <div>
-                    <label
-                        for="published_at"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >Published At</label
-                    >
-                    <input
-                        type="date"
-                        :max="today"
-                        v-model="published_at"
-                        id="published_at"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required
-                    />
-                </div>
-
-                <!-- Featured Image Input -->
-                <div>
-                    <label
-                        for="featured_image"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >Featured Image</label
-                    >
-                    <input
-                        @change="handleFileUpload"
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mb-4"
-                        id="featured_image"
-                        type="file"
-                        accept="image/*"
-                    />
-                    <p v-if="fileName">File yang dipilih: {{ fileName }}</p>
-                    <img
-                        v-if="imageUrl"
-                        :src="imageUrl"
-                        class="w-full"
-                        alt="Preview"
-                    />
-                </div>
-            </div>
-            <div class="grid gap-6 mb-6 md:grid-cols-1">
                 <!-- Content (CKEditor) -->
-                <div class="col-span-2 prose">
+                <div class="prose">
                     <label
                         for="content"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >Content</label
                     >
                     <ClientOnly>
-                        <ckeditor
-                            v-if="editor"
-                            v-model="content"
-                            :editor="editor"
-                            :config="config"
-                        />
+                        <div>
+                            <ckeditor
+                                v-if="editor"
+                                v-model="content"
+                                :editor="editor"
+                                :config="config"
+                            />
+                        </div>
                     </ClientOnly>
                 </div>
             </div>
 
-            <p v-if="postError" class="text-sm text-red-600">{{ postError }}</p>
+            <p v-if="profileError" class="text-sm text-red-600">
+                {{ profileError }}
+            </p>
 
             <div class="flex justify-end">
                 <button
@@ -135,19 +130,20 @@
 
 <script setup>
     import auth from "~/stores/middleware/auth";
-    import { ref, onMounted } from "vue";
-    import { createData, uploadImage } from "~/utils/api";
+    import { ref, onMounted, computed } from "vue";
+    import { useRoute, navigateTo } from "nuxt/app";
+    import { fetchDataByID, uploadImage, editData } from "~/utils/api";
     import { Ckeditor, useCKEditorCloud } from "@ckeditor/ckeditor5-vue";
 
     definePageMeta({
         layout: "admin",
-        title: "Admin Area | Create Post Section",
+        title: "Admin Area | Edit Profile Section",
         middleware: [auth],
     });
 
-    const configEnv = useRuntimeConfig();
+    const route = useRoute();
 
-    const today = new Date().toISOString().split("T")[0];
+    const configEnv = useRuntimeConfig();
 
     const cloud = useCKEditorCloud({
         version: "45.2.1",
@@ -249,12 +245,12 @@
                 CKFinderUploadAdapter,
                 Font,
                 Alignment,
-                Code,
-                CodeBlock,
                 Strikethrough,
+                Underline,
                 Subscript,
                 Superscript,
-                Underline,
+                Code,
+                CodeBlock,
                 Indent,
                 IndentBlock,
                 TodoList,
@@ -371,45 +367,43 @@
     });
 
     const title = ref("");
-    const author = ref("");
-    const file = ref(null);
-    const fileName = ref("");
-    const imageUrl = ref("");
-    const published_at = ref("");
     const content = ref("");
-    const postError = ref("");
-
-    const handleFileUpload = (event) => {
-        const selectedFile = event.target.files[0];
-        if (selectedFile) {
-            file.value = selectedFile;
-            fileName.value = selectedFile.name;
-            imageUrl.value = URL.createObjectURL(selectedFile);
-        }
-    };
+    const successMessage = ref("");
+    const profileError = ref("");
 
     const handlerSubmit = async () => {
         try {
-            const respImage = await uploadImage("/upload-image", file.value);
-
             const requestData = {
                 title: title.value,
-                author: author.value,
-                featured_image: respImage.data.url,
                 content: content.value,
-                published_at: published_at.value,
             };
 
-            await createData("/posts/admin", requestData);
-            const successMessage = "Post berhasil dibuat!";
-            sessionStorage.setItem("successMessage", successMessage);
-
-            navigateTo("/dashboard/post");
+            await editData(`/profile/admin`, requestData, 1);
+            successMessage.value = "Profile berhasil diubah!";
         } catch (error) {
             console.error("Error", error);
-            postError.value = error.message;
+            profileError.value = error.message;
         }
     };
+
+    const closeToast = () => {
+        successMessage.value = null;
+    };
+
+    const getProfileById = async () => {
+        try {
+            const response = await fetchDataByID(`/profile`, 1);
+            const profile = response.data;
+            title.value = profile.title;
+            content.value = profile.content;
+        } catch (error) {
+            console.error("Error fetching profile data", error);
+        }
+    };
+
+    onMounted(() => {
+        getProfileById();
+    });
 </script>
 
 <style>

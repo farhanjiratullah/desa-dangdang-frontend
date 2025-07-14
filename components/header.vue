@@ -30,6 +30,9 @@
                         >
                     </li>
                     <li>
+                        <NuxtLink :to="{ name: 'profile' }">Profile</NuxtLink>
+                    </li>
+                    <li>
                         <NuxtLink :to="{ name: 'index', hash: '#team' }"
                             >Team</NuxtLink
                         >

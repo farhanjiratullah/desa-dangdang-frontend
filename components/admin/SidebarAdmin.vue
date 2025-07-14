@@ -203,6 +203,41 @@
                         </NuxtLink>
                     </li>
                     <li>
+                        <NuxtLink
+                            to="/dashboard/profile"
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        >
+                            <!-- SVG Berita -->
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                width="24"
+                                height="24"
+                            >
+                                <g>
+                                    <circle
+                                        cx="12"
+                                        cy="8"
+                                        r="4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                    />
+                                    <path
+                                        d="M12 14c-4 0-6 2-6 4v2h12v-2c0-2-2-4-6-4z"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                    />
+                                </g>
+                            </svg>
+
+                            <span class="flex-1 ms-3 whitespace-nowrap"
+                                >Profile</span
+                            >
+                        </NuxtLink>
+                    </li>
+                    <li>
                         <button
                             @click="handleLogout"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
