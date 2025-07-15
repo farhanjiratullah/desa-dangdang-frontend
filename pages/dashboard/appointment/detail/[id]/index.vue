@@ -29,7 +29,7 @@
                 <tbody>
                     <tr>
                         <td class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                            Nama Klien
+                            Nama
                         </td>
                         <td>:</td>
                         <td>{{ form.name }}</td>

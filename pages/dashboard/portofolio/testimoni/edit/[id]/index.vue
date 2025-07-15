@@ -21,7 +21,7 @@
             Back
         </NuxtLink>
         <div class="flex flex-row items-center justify-between">
-            <div class="my-5 text-2xl font-bold">Tambah Testimoni</div>
+            <div class="my-5 text-2xl font-bold">Edit Testimonial</div>
         </div>
 
         <form @submit.prevent="handlerSubmit" method="post">
@@ -83,7 +83,6 @@
                         id="thumbnail"
                         type="file"
                         accept="image/*"
-                        required
                     />
                     <p v-if="fileName">File yang dipilih: {{ fileName }}</p>
                     <img
@@ -112,17 +111,19 @@
 <script setup>
     import auth from "~/stores/middleware/auth";
     import { ref, onMounted } from "vue";
-    import { createData, uploadImage, fetchData } from "~/utils/api";
+    import { editData, uploadImage, fetchDataByID } from "~/utils/api";
+    import { useRoute, navigateTo } from "nuxt/app";
+    import { useAuthStore } from "@/stores/auth";
 
     definePageMeta({
         layout: "admin",
-        title: "Admin Area | Create Testimonial",
+        title: "Admin Area | Edit Testimonial Section",
         middleware: [auth],
     });
 
     const client_name = ref("");
     const role = ref("");
-    const portofolio_id = ref(1);
+    const portofolio_section_id = ref(1);
     const message = ref("");
     const file = ref(null);
     const fileName = ref("");
@@ -138,20 +139,48 @@
         }
     };
 
-    const handlerSubmit = async () => {
+    const route = useRoute();
+
+    const getTestimonialByID = async () => {
+        const id = route.params.id;
         try {
-            const respImage = await uploadImage("/upload-image", file.value);
+            const dataTestimonial = await fetchDataByID(
+                "/portofolio-testimonials/admin",
+                id
+            );
+            client_name.value = dataTestimonial.data.client_name;
+            role.value = dataTestimonial.data.role;
+            portofolio_section_id.value =
+                dataTestimonial.data.portofolio_section.id;
+            message.value = dataTestimonial.data.message;
+            imageUrl.value = dataTestimonial.data.thumbnail;
+        } catch (error) {
+            console.error("Error", error);
+            projectError.value = error.message;
+        }
+    };
+
+    const handlerSubmit = async () => {
+        const id = route.params.id;
+        try {
+            if (file.value) {
+                const respImage = await uploadImage(
+                    "/upload-image",
+                    file.value
+                );
+                imageUrl.value = respImage.data.url;
+            }
 
             const requestData = {
                 client_name: client_name.value,
-                thumbnail: respImage.data.url,
+                thumbnail: imageUrl.value,
                 role: role.value,
-                portofolio_section_id: portofolio_id.value,
+                portofolio_section_id: portofolio_section_id.value,
                 message: message.value,
             };
 
-            await createData("/portofolio-testimonials/admin", requestData);
-            const successMessage = "Data berhasil dibuat!";
+            await editData("/portofolio-testimonials/admin", requestData, id);
+            const successMessage = "Data berhasil diubah!";
             sessionStorage.setItem("successMessage", successMessage);
 
             navigateTo("/dashboard/portofolio/testimoni");
@@ -161,18 +190,7 @@
         }
     };
 
-    const listPortofolios = ref([]);
-    const getPortofolios = async () => {
-        try {
-            const dataHero = await fetchData("/portofolio-sections/admin");
-            listPortofolios.value = dataHero.data;
-        } catch (error) {
-            console.error("Error", error);
-            projectError.value = error.message;
-        }
-    };
-
     onMounted(() => {
-        getPortofolios();
+        getTestimonialByID();
     });
 </script>

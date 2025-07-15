@@ -21,7 +21,7 @@
             Back
         </NuxtLink>
         <div class="flex flex-row items-center justify-between">
-            <div class="my-5 text-2xl font-bold">Tambah Hero</div>
+            <div class="my-5 text-2xl font-bold">Tambah Slider</div>
         </div>
 
         <form @submit.prevent="handlerSubmit" method="post">

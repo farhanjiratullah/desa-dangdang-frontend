@@ -68,7 +68,6 @@
                 <tr>
                     <th scope="col" class="px-6 py-3">Judul</th>
                     <th scope="col" class="px-6 py-3">Penulis</th>
-                    <th scope="col" class="px-6 py-3">Image</th>
                     <th scope="col" class="px-6 py-3">Dipublikasikan Pada</th>
                     <th scope="col" class="px-6 py-3">Action</th>
                 </tr>
@@ -91,13 +90,6 @@
                     </th>
                     <td class="px-6 py-4">
                         {{ item.author }}
-                    </td>
-                    <td class="px-6 py-4">
-                        <img
-                            :src="item.featured_image"
-                            class="w-10 h-10"
-                            alt=""
-                        />
                     </td>
                     <td class="px-6 py-4">
                         {{

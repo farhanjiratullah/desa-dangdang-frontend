@@ -49,7 +49,7 @@
     </div>
 
     <div class="flex flex-row items-center justify-between">
-        <div class="my-5 text-2xl font-bold">List Data Appointment</div>
+        <div class="my-5 text-2xl font-bold">List Data Pesan</div>
         <div v-if="loading">Loading...</div>
     </div>
     <div class="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
@@ -60,9 +60,9 @@
                 class="text-xs border-b text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
             >
                 <tr>
-                    <th scope="col" class="px-6 py-3">Nama Klien</th>
+                    <th scope="col" class="px-6 py-3">Nama</th>
                     <th scope="col" class="px-6 py-3">E-mail</th>
-                    <th scope="col" class="px-6 py-3">Budget</th>
+                    <th scope="col" class="px-6 py-3">Phone Number</th>
                     <th scope="col" class="px-6 py-3">Action</th>
                 </tr>
             </thead>
@@ -88,7 +88,7 @@
                         scope="row"
                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                        {{ formatter(item.budget) }}
+                        {{ item.phone_number }}
                     </th>
                     <td class="flex items-center px-6 py-4">
                         <NuxtLink
